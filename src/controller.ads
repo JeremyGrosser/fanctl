@@ -8,4 +8,6 @@ package Controller is
     procedure Read_Current (I : out Current);
     procedure Set_PWM (C : in Channel;
                        D : in Duty_Cycle);
+
+    procedure Test;
 end Controller;

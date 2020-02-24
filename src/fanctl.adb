@@ -10,7 +10,7 @@ procedure Fanctl is
     Interval : constant Time_Span := Milliseconds(100);
 begin
     Initialize;
-    --Test;
+    Test;
 
     loop
         delay until Next_Second;

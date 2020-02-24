@@ -1,13 +1,19 @@
 with Controller; use Controller;
+with Ada.Real_Time; use Ada.Real_Time;
 
 procedure Fanctl is
-    Temperature_Threshold : constant Temperature := 50.0;
-    T : Temperature;
+    Temperature_Threshold : constant Celsius := 30.0;
+    T : Celsius;
     I : Current;
+
+    Next_Second : Time := Clock;
+    Interval : constant Time_Span := Milliseconds(100);
 begin
-    Test;
+    Initialize;
+    --Test;
 
     loop
+        delay until Next_Second;
         Read_Sensors (T, I);
         if T > Temperature_Threshold then
             Set_PWM (Fan, Duty_Cycle'Last);
@@ -26,5 +32,7 @@ begin
                 Set_PWM (Buzzer, Duty_Cycle'First);
             end if;
         end if;
+
+        Next_Second := Next_Second + Interval;
     end loop;
 end Fanctl;

@@ -1,13 +1,13 @@
-project Fanctl_Embedded is
-    for Runtime ("Ada") use "zfp-feather_stm32f405";
-    for Target use "arm-eabi";
+with "Ada_Drivers_Library/boards/feather_stm32f405/feather_stm32f405_full.gpr";
 
+project Fanctl_Embedded is
+    for Runtime ("Ada") use Feather_STM32F405_Full'Runtime("Ada");
+    for Target use "arm-eabi";
     for Main use ("fanctl.adb");
+    for Languages use ("Ada");
     for Source_Dirs use ("src");
     for Object_Dir use "obj";
     for Create_Missing_Dirs use "True";
 
-    package Compiler is
-        for Switches ("Ada") use ("-g");
-    end Compiler;
+    package Compiler renames Feather_STM32F405_Full.Compiler;
 end Fanctl_Embedded;

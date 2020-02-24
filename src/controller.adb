@@ -1,8 +1,13 @@
-with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Assertions;
+with STM32.Device; use STM32.Device;
 
 package body Controller is
-    procedure Read_Sensors (T : out Temperature;
+    procedure Initialize is
+    begin
+        Enable_Clock (I2C_1);
+    end Initialize;
+
+    procedure Read_Sensors (T : out Celsius;
                             I : out Current) is
     begin
         T := 0.0;
@@ -17,7 +22,7 @@ package body Controller is
 
     procedure Test is
         use Ada.Assertions;
-        T : Temperature;
+        T : Celsius;
         I : Current;
     begin
         Set_PWM (Fan, 0);

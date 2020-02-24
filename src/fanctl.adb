@@ -25,7 +25,7 @@ begin
             end if;
         else
             Set_PWM (Fan, Duty_Cycle'First);
-            if I /= Current'First then
+            if I = Current'First then
                 Set_PWM (Fan, Duty_Cycle'First);
                 Set_PWM (Buzzer, Duty_Cycle'Last / 2);
             else

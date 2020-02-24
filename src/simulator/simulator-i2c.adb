@@ -9,12 +9,13 @@ package body Simulator.I2C is
         Status  : out I2C_Status;
         Timeout : Natural := 1000) is
     begin
+        Status := Ok;
+
         Put ("I2C Transmit " & Addr'Image & " -> ");
         for I in Data'Range loop
             Put (Data (I)'Image);
         end loop;
         Put_Line ("");
-        Status := Ok;
     end Master_Transmit;
 
     overriding 
@@ -25,9 +26,10 @@ package body Simulator.I2C is
         Status  : out I2C_Status;
         Timeout : Natural := 1000) is
     begin
-        Put_Line ("I2C Receive " & Addr'Image);
         Data (Data'First) := 0;
         Status := Ok;
+
+        Put_Line ("I2C Receive " & Addr'Image);
     end Master_Receive;
 
     overriding
@@ -40,12 +42,13 @@ package body Simulator.I2C is
         Status          : out I2C_Status;
         Timeout         : Natural := 1000) is
     begin
-        Put ("I2C Write " & Addr'Image & " -> " & Mem_Addr'Image & " = ");
+        Status := Ok;
+
+        Put ("I2C Write " & Addr'Image & " [" & Mem_Addr'Image & "] ");
         for I in Data'Range loop
             Put (Data (I)'Image);
         end loop;
         Put_Line ("");
-        Status := Ok;
     end Mem_Write;
 
     overriding
@@ -58,8 +61,13 @@ package body Simulator.I2C is
         Status          : out I2C_Status;
         Timeout         : Natural := 1000) is
     begin
-        Put_Line ("I2C Read " & Addr'Image & "[" & Mem_Addr'Image & "]");
         Data (Data'First) := 0;
         Status := Ok;
+
+        Put ("I2C Read  " & Addr'Image & " [" & Mem_Addr'Image & "] ");
+        for I in Data'Range loop
+            Put (Data (I)'Image);
+        end loop;
+        Put_Line ("");
     end Mem_Read;
 end Simulator.I2C;

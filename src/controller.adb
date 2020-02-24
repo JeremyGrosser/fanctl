@@ -1,15 +1,12 @@
 with Ada.Text_IO; use Ada.Text_IO;
-with Ada.Numerics.Float_Random; use Ada.Numerics.Float_Random;
 with Ada.Assertions;
 
 package body Controller is
-    RNG : Generator;
-
     procedure Read_Sensors (T : out Temperature;
                             I : out Current) is
     begin
-        T := Temperature (Random (RNG) * 100.0);
-        I := Current (Random (RNG));
+        T := 0.0;
+        I := 0.0;
     end Read_Sensors;
 
     procedure Set_PWM (C : in Channel;

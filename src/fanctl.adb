@@ -1,9 +1,7 @@
 with Controller; use Controller;
-with Ada.Calendar; use Ada.Calendar;
 
 procedure Fanctl is
     Temperature_Threshold : constant Temperature := 50.0;
-    Interval : constant Duration := Duration (1.0);
     T : Temperature;
     I : Current;
 begin
@@ -28,6 +26,5 @@ begin
                 Set_PWM (Buzzer, Duty_Cycle'First);
             end if;
         end if;
-        delay Interval;
     end loop;
 end Fanctl;

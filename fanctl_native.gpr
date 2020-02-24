@@ -3,6 +3,7 @@ project Fanctl_Native is
     for Source_Dirs use (
         "Ada_Drivers_Library/hal/src/**",
         "Ada_Drivers_Library/components/src/**",
+        "src/native",
         "src");
     for Object_Dir use "obj";
     for Create_Missing_Dirs use "True";

@@ -1,23 +1,21 @@
 with Ada.Assertions;
-with TI_TMP102;
-with Feather_STM32F405.I2C;
-with HAL.I2C; use HAL.I2C;
+with TMP102;
+with Platform;
 
 package body Controller is
-    TMP102_I2C : constant Any_I2C_Port := Feather_STM32F405.I2C.Controller;
     TMP102_Address : constant := 2#10010000#;
     Simulated_Current : Current := 0.0;
 
     procedure Initialize is
     begin
-        Feather_STM32F405.I2C.Initialize ( 400_000 );
-        TI_TMP102.Initialize (TMP102_I2C, TMP102_Address);
+        Platform.Initialize;
+        TMP102.Initialize (Platform.I2C_Controller, TMP102_Address);
     end Initialize;
 
     procedure Read_Sensors (T : out Celsius;
                             I : out Current) is
     begin
-        T := Celsius (TI_TMP102.Temperature (TMP102_I2C, TMP102_Address));
+        T := Celsius (TMP102.Temperature (Platform.I2C_Controller, TMP102_Address));
         I := Simulated_Current;
     end Read_Sensors;
 
@@ -36,7 +34,7 @@ package body Controller is
         T : Celsius;
         I : Current;
     begin
-        TI_TMP102.Test;
+        TMP102.Test;
 
         Set_PWM (Fan, 0);
         Set_PWM (Buzzer, 0);

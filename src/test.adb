@@ -1,6 +1,6 @@
-with TI_TMP102;
+with Controller;
 
 procedure Test is
 begin
-    TI_TMP102.Test;
+    Controller.Test;
 end Test;

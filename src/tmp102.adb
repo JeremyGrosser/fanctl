@@ -2,7 +2,7 @@ with HAL; use HAL;
 with Interfaces; use Interfaces;
 with Ada.Assertions;
 
-package body TI_TMP102 is
+package body TMP102 is
     -- Datasheet section 7.3.1 conversion algorithm (12-bit mode)
     function Convert (T : Unsigned_16) return Celsius is
         Resolution : constant := 0.0625;
@@ -78,4 +78,4 @@ package body TI_TMP102 is
         T := T or Shift_Left(Unsigned_16(Value(1)), 4);
         return Convert(T);
     end Temperature;
-end TI_TMP102;
+end TMP102;

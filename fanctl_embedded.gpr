@@ -10,4 +10,12 @@ project Fanctl_Embedded is
     for Create_Missing_Dirs use "True";
 
     package Compiler renames Feather_STM32F405_SFP.Compiler;
+
+    package Linker is
+        for Default_Switches ("Ada") use (
+            "-Wl,--gc-sections",
+            "-Wl,--print-memory-usage",
+            "-Wl,-flto");
+    end Linker;
+
 end Fanctl_Embedded;

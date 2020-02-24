@@ -6,14 +6,14 @@ procedure Fanctl is
     T : Celsius;
     I : Current;
 
-    Next_Second : Time := Clock;
+    Next_Loop : Time := Clock;
     Interval : constant Time_Span := Milliseconds(100);
 begin
     Initialize;
     Test;
 
     loop
-        delay until Next_Second;
+        delay until Next_Loop;
         Read_Sensors (T, I);
         if T > Temperature_Threshold then
             Set_PWM (Fan, Duty_Cycle'Last);
@@ -33,6 +33,6 @@ begin
             end if;
         end if;
 
-        Next_Second := Next_Second + Interval;
+        Next_Loop := Next_Loop + Interval;
     end loop;
 end Fanctl;

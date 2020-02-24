@@ -1,9 +1,9 @@
-project Fanctl_Native is
+project Fanctl_Simulator is
     for Main use ("test.adb");
     for Source_Dirs use (
         "Ada_Drivers_Library/hal/src/**",
         "Ada_Drivers_Library/components/src/**",
-        "src/native",
+        "src/simulator",
         "src");
     for Object_Dir use "obj";
     for Create_Missing_Dirs use "True";
@@ -11,4 +11,4 @@ project Fanctl_Native is
     package Compiler is
         for Switches ("Ada") use ("-g");
     end Compiler;
-end Fanctl_Native;
+end Fanctl_Simulator;

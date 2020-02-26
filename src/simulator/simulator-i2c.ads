@@ -2,9 +2,7 @@ with HAL.I2C; use HAL.I2C;
 with HAL; use HAL;
 
 package Simulator.I2C is
-    type Simulator_I2C_Port is limited new I2C_Port with record
-        Id : Positive;
-    end record;
+    type Simulator_I2C_Port is limited new I2C_Port with null record;
 
     overriding
     procedure Master_Transmit (

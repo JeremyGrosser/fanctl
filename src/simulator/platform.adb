@@ -1,7 +1,7 @@
 with Simulator.I2C;
 
 package body Platform is
-    I2C_1 : aliased Simulator.I2C.Simulator_I2C_Port := (Id => 1);
+    I2C_1 : aliased Simulator.I2C.Simulator_I2C_Port;
 
     procedure Initialize is
     begin

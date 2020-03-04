@@ -27,13 +27,22 @@ procedure Test is
     end Test_Fan;
 
     Temperature : Celsius;
+    Success     : Boolean;
 begin
     Initialize;
 
-    Get_Temperature (Temperature);
+    Get_Temperature (Temperature, Success);
+    Assert (Success = True);
 
+    Set_PWM (Buzzer, 90);
     Test_Fan (100);
+
+    Set_PWM (Buzzer, 75);
     Test_Fan (75);
+
+    Set_PWM (Buzzer, 50);
     Test_Fan (50);
+
+    Set_PWM (Buzzer, 0);
     Test_Fan (0);
 end Test;

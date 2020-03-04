@@ -9,7 +9,8 @@ package body Platform is
     end Initialize;
 
     procedure Get_Temperature
-        (T : out Celsius) is
+        (T       : out Celsius;
+         Success : out Boolean) is
         package CIO is new Float_IO (Celsius);
     begin
         CIO.Default_Aft := 1;
@@ -17,6 +18,8 @@ package body Platform is
         CIO.Default_Fore := 3;
 
         T := 0.0;
+        Success := True;
+
         Put ("Get_Temperature ");
         CIO.Put (T);
         Put_Line ("C");

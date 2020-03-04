@@ -1,15 +1,48 @@
-with Simulator.I2C;
+with Ada.Text_IO; use Ada.Text_IO;
 
 package body Platform is
-    I2C_1 : aliased Simulator.I2C.Simulator_I2C_Port;
+    Fan_Duty_Cycle : Percent := 0;
+    Fan_Frequency  : Hertz   := 0;
 
     procedure Initialize is
     begin
-        null;
+        Put_Line ("Initialize");
     end Initialize;
 
-    function I2C_Controller return not null HAL.I2C.Any_I2C_Port is
+    procedure Get_Temperature
+        (T : out Celsius) is
+        package CIO is new Float_IO (Celsius);
     begin
-        return (I2C_1'Access);
-    end I2C_Controller;
+        CIO.Default_Aft := 1;
+        CIO.Default_Exp := 0;
+        CIO.Default_Fore := 3;
+
+        T := 0.0;
+        Put ("Get_Temperature ");
+        CIO.Put (T);
+        Put_Line ("C");
+    end Get_Temperature;
+
+    procedure Set_PWM
+        (C          : in Channel;
+         Frequency  : in Hertz;
+         Duty_Cycle : in Percent) is
+    begin
+        if C = Fan then
+            Fan_Duty_Cycle := Duty_Cycle;
+            Fan_Frequency  := Frequency;
+        end if;
+
+        Put_Line ("Set_PWM " & C'Image & Frequency'Image & "Hz " & Duty_Cycle'Image & "%");
+    end Set_PWM;
+
+    procedure Get_PWM
+        (C          : in Channel;
+         Frequency  : out Hertz;
+         Duty_Cycle : out Percent) is
+    begin
+        Frequency := Fan_Frequency;
+        Duty_Cycle := Fan_Duty_Cycle;
+        Put_Line ("Get_PWM " & C'Image & Frequency'Image & "Hz " & Duty_Cycle'Image & "%");
+    end Get_PWM;
 end Platform;

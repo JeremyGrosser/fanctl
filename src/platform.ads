@@ -1,7 +1,18 @@
-with HAL.I2C;
-
 package Platform is
-    procedure Initialize;
+    type Celsius is digits 4;
+    type Hertz is new Natural;
+    type Percent is new Integer range 0 .. 100;
+    type Channel is (Fan);
 
-    function I2C_Controller return not null HAL.I2C.Any_I2C_Port;
+    procedure Initialize;
+    procedure Get_Temperature
+        (T : out Celsius);
+    procedure Set_PWM
+        (C          : in Channel;
+         Frequency  : in Hertz;
+         Duty_Cycle : in Percent);
+    procedure Get_PWM
+        (C          : in Channel;
+         Frequency  : out Hertz;
+         Duty_Cycle : out Percent);
 end Platform;

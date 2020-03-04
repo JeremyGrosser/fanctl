@@ -2,7 +2,6 @@ with Ada.Text_IO; use Ada.Text_IO;
 
 package body Platform is
     Fan_Duty_Cycle : Percent := 0;
-    Fan_Frequency  : Hertz   := 0;
 
     procedure Initialize is
     begin
@@ -25,24 +24,20 @@ package body Platform is
 
     procedure Set_PWM
         (C          : in Channel;
-         Frequency  : in Hertz;
          Duty_Cycle : in Percent) is
     begin
         if C = Fan then
             Fan_Duty_Cycle := Duty_Cycle;
-            Fan_Frequency  := Frequency;
         end if;
 
-        Put_Line ("Set_PWM " & C'Image & Frequency'Image & "Hz " & Duty_Cycle'Image & "%");
+        Put_Line ("Set_PWM " & C'Image & Duty_Cycle'Image & "%");
     end Set_PWM;
 
     procedure Get_PWM
         (C          : in Channel;
-         Frequency  : out Hertz;
          Duty_Cycle : out Percent) is
     begin
-        Frequency := Fan_Frequency;
         Duty_Cycle := Fan_Duty_Cycle;
-        Put_Line ("Get_PWM " & C'Image & Frequency'Image & "Hz " & Duty_Cycle'Image & "%");
+        Put_Line ("Get_PWM " & C'Image & Duty_Cycle'Image & "%");
     end Get_PWM;
 end Platform;

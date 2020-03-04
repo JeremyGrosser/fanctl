@@ -3,17 +3,18 @@ with STM32.GPIO;    use STM32.GPIO;
 with STM32.Timers;  use STM32.Timers;
 with STM32.PWM;     use STM32.PWM;
 with STM32;         use STM32;
+with HAL;           use HAL;
 with Feather_STM32F405;
 
 package body Platform is
     --Temp_In     : GPIO_Point renames Feather_STM32F405.A0;
     --Fan_PWM_In  : GPIO_Point renames Feather_STM32F405.A1;
-    Fan_PWM_Out : GPIO_Point renames Feather_STM32F405.A2;
+    Fan_PWM_Out : GPIO_Point renames Feather_STM32F405.D5;
 
-    Timer_AF        : constant GPIO_Alternate_Function := GPIO_AF_TIM4_2;
-    Selected_Timer  : Timer renames Timer_4;
+    Timer_AF        : constant GPIO_Alternate_Function := GPIO_AF_TIM3_2;
+    Selected_Timer  : Timer renames Timer_3;
     Output_Channel  : constant Timer_Channel := Channel_2;
-    Fan_Control   : PWM_Modulator;
+    Fan_Control     : PWM_Modulator;
 
     procedure Initialize is
     begin
@@ -27,11 +28,6 @@ package body Platform is
         Fan_Control.Enable_Output;
     end Initialize;
 
-    procedure Test is
-    begin
-        null;
-    end Test;
-
     procedure Get_Temperature
         (T : out Celsius) is
     begin
@@ -42,6 +38,17 @@ package body Platform is
         (C          : in Channel;
          Duty_Cycle : in Percent) is
     begin
-        null;
+        if C = Fan then
+            Fan_Control.Set_Duty_Cycle (Percentage (Duty_Cycle));
+        end if;
     end Set_PWM;
+
+    procedure Get_PWM
+        (C          : in Channel;
+         Duty_Cycle : out Percent) is
+    begin
+        if C = Fan then
+            Duty_Cycle := Percent (Fan_Control.Current_Duty_Cycle);
+        end if;
+    end Get_PWM;
 end Platform;

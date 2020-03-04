@@ -43,12 +43,13 @@ package body Platform is
         end if;
     end Set_PWM;
 
-    procedure Get_PWM
+    procedure Get_RPM
         (C          : in Channel;
-         Duty_Cycle : out Percent) is
+         RPM        : out Hertz) is
+         Fan_Counts : Hertz := 125; -- rising edges per second on sense pin
     begin
         if C = Fan then
-            Duty_Cycle := Percent (Fan_Control.Current_Duty_Cycle);
+            RPM := (Fan_Counts * 60) / 2;
         end if;
-    end Get_PWM;
+    end Get_RPM;
 end Platform;

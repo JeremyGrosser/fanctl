@@ -1,5 +1,6 @@
 package Platform is
     type Celsius is digits 4;
+    type Hertz is new Natural;
     type Percent is new Integer range 0 .. 100;
     type Channel is (Fan);
 
@@ -9,7 +10,7 @@ package Platform is
     procedure Set_PWM
         (C          : in Channel;
          Duty_Cycle : in Percent);
-    procedure Get_PWM
+    procedure Get_RPM
         (C          : in Channel;
-         Duty_Cycle : out Percent);
+         RPM        : out Hertz);
 end Platform;

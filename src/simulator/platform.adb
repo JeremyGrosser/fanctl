@@ -33,11 +33,11 @@ package body Platform is
         Put_Line ("Set_PWM " & C'Image & Duty_Cycle'Image & "%");
     end Set_PWM;
 
-    procedure Get_PWM
+    procedure Get_RPM
         (C          : in Channel;
-         Duty_Cycle : out Percent) is
+         RPM        : out Hertz) is
     begin
-        Duty_Cycle := Fan_Duty_Cycle;
-        Put_Line ("Get_PWM " & C'Image & Duty_Cycle'Image & "%");
-    end Get_PWM;
+        RPM := Hertz (3750.0 * (Float (Fan_Duty_Cycle) / 100.0));
+        Put_Line ("Get_RPM " & C'Image & RPM'Image & " RPM");
+    end Get_RPM;
 end Platform;

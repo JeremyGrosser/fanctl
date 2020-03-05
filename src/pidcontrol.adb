@@ -9,10 +9,10 @@ package body PIDControl is
         Duration : constant Time_Span := Milliseconds (25);
         T        : Time := Clock;
     begin
-        Set_PWM (Buzzer, 50);
+        Set_PWM (Beep, 50);
         T := T + Duration;
         delay until T;
-        Set_PWM (Buzzer, 0);
+        Set_PWM (Beep, 0);
         T := T + Duration;
         delay until T;
     end Fault_Alarm;
@@ -61,7 +61,7 @@ package body PIDControl is
 
         Set_Point   : constant Celsius := 50.0;
         Temperature : Celsius;
-        RPM         : Hertz;
+        --RPM         : Hertz;
         Success     : Boolean;
         Fan_Speed   : Percent := 100;
         Error_F     : Float := 0.0;
@@ -76,6 +76,7 @@ package body PIDControl is
                 Fault_Alarm;
                 Set_PWM (Fan, Percent'Last);
             else
+                Temperature := Constrain (Temperature, -40.0, 125.0);
                 if Temperature > (Set_Point + 10.0) then
                     Fault_Alarm;
                 end if;
@@ -99,10 +100,10 @@ package body PIDControl is
                 T := T + Interval;
                 delay until T;
 
-                Get_RPM (RPM);
-                if Target > 0 and RPM = 0 then
-                    Fault_Alarm;
-                end if;
+                --Get_RPM (RPM);
+                --if Target > 0 and RPM = 0 then
+                --    Fault_Alarm;
+                --end if;
             end if;
         end loop;
     end Run;

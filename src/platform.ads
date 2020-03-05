@@ -1,8 +1,8 @@
 package Platform is
-    subtype Celsius is Float digits 4;
+    subtype Celsius is Float;
     type Hertz is new Natural;
     subtype Percent is Integer range -100 .. 100;
-    type Channel is (Fan, Buzzer);
+    type Channel is (Fan, Beep);
 
     procedure Initialize;
     procedure Get_Temperature

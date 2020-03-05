@@ -3,7 +3,7 @@ with "Ada_Drivers_Library/boards/feather_stm32f405/feather_stm32f405_sfp.gpr";
 project Fanctl_Embedded is
     for Runtime ("Ada") use Feather_STM32F405_SFP'Runtime("Ada");
     for Target use "arm-eabi";
-    for Main use ("test.adb");
+    for Main use ("test.adb", "main.adb");
     for Languages use ("Ada");
     for Source_Dirs use (
         "src/feather_stm32f405",

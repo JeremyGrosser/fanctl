@@ -1,7 +1,8 @@
 with Ada.Text_IO; use Ada.Text_IO;
 
 package body Platform is
-    Fan_Duty_Cycle : Percent := 0;
+    Simulated_Speed : Percent := 0;
+    Simulated_Temp  : Celsius := 21.0;
 
     procedure Initialize is
     begin
@@ -17,8 +18,21 @@ package body Platform is
         CIO.Default_Exp := 0;
         CIO.Default_Fore := 3;
 
-        T := 0.0;
-        Success := True;
+        if Simulated_Speed > 0 then
+            Simulated_Temp := Simulated_Temp - Celsius (1.0 * (Float (Simulated_Speed) / 100.0));
+            if Simulated_Temp < 15.0 then
+                Simulated_Temp := 15.0;
+            end if;
+        else
+            Simulated_Temp := Simulated_Temp + 0.5;
+        end if;
+
+        T := Simulated_Temp;
+        if T >= -40.0 and T <= 125.0 then
+            Success := True;
+        else
+            Success := False;
+        end if;
 
         Put ("Get_Temperature ");
         CIO.Put (T);
@@ -30,17 +44,15 @@ package body Platform is
          Duty_Cycle : in Percent) is
     begin
         if C = Fan then
-            Fan_Duty_Cycle := Duty_Cycle;
+            Simulated_Speed := Duty_Cycle;
         end if;
 
         Put_Line ("Set_PWM " & C'Image & Duty_Cycle'Image & "%");
     end Set_PWM;
 
-    procedure Get_RPM
-        (C          : in Channel;
-         RPM        : out Hertz) is
+    procedure Get_RPM (RPM : out Hertz) is
     begin
-        RPM := Hertz (3750.0 * (Float (Fan_Duty_Cycle) / 100.0));
-        Put_Line ("Get_RPM " & C'Image & RPM'Image & " RPM");
+        RPM := Hertz (3750.0 * (Float (Simulated_Speed) / 100.0));
+        Put_Line ("Get_RPM " & RPM'Image & " RPM");
     end Get_RPM;
 end Platform;

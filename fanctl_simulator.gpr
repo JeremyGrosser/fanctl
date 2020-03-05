@@ -1,5 +1,5 @@
 project Fanctl_Simulator is
-    for Main use ("test.adb");
+    for Main use ("test.adb", "main.adb");
     for Source_Dirs use (
         "Ada_Drivers_Library/hal/src/**",
         "src/simulator",

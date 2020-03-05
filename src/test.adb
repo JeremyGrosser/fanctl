@@ -5,9 +5,9 @@ with Platform;          use Platform;
 procedure Test is
     function In_Range
         (Value : in Float;
-        Target : in Float;
-        Margin : in Float)
-        return Boolean is
+         Target : in Float;
+         Margin : in Float)
+         return Boolean is
     begin
         return (Value >= (Target * (1.0 - Margin))) and
                (Value <= (Target * (1.0 + Margin)));
@@ -22,7 +22,7 @@ procedure Test is
         T := T + Milliseconds (500);
         delay until T;
 
-        Get_RPM (Fan, RPM);
+        Get_RPM (RPM);
         Assert (In_Range (Float (RPM), Float (Expected_RPM), 0.10));
     end Test_Fan;
 

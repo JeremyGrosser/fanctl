@@ -37,7 +37,8 @@ package body Platform is
              Fan_Speed,
              Fan_Speed_AF);
         Fan_Control.Enable_Output;
-        Set_PWM (Fan, 0);
+        -- Set fan to max speed in case we crash during init
+        Set_PWM (Fan, 100);
 
         Fan_Sense.Configure_Alternate_Function (Fan_Sense_AF);
         Enable_Clock (Fan_Sense_Timer);
@@ -92,16 +93,10 @@ package body Platform is
         end if;
     end Set_PWM;
 
-    procedure Get_RPM
-        (C          : in Channel;
-         RPM        : out Hertz) is
+    procedure Get_RPM (RPM : out Hertz) is
          Counts : UInt32;
     begin
-        if C = Fan then
-            Counts := Current_Capture_Value (Fan_Sense_Timer, Fan_Sense_Channel);
-            RPM := Hertz (Counts) * 60;
-        else
-            RPM := 0;
-        end if;
+        Counts := Current_Capture_Value (Fan_Sense_Timer, Fan_Sense_Channel);
+        RPM := Hertz (Counts) * 60;
     end Get_RPM;
 end Platform;

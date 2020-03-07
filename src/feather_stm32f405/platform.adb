@@ -22,12 +22,9 @@ package body Platform is
     Fan_Sense_Channel   : constant Timer_Channel := Channel_1;
 
     Temp_Sense_GPIO     : GPIO_Point renames Feather_STM32F405.A0;
-    Temp_Sense_ADC      : Analog_To_Digital_Converter renames ADC_1;
     Temp_Sense_Channel  : constant Analog_Input_Channel := 4;
-    Temp_Sense_Rank     : constant Injected_Channel_Rank := 1;
-
-    VRef_ADC            : Analog_To_Digital_Converter renames ADC_1;
-    VRef_Rank           : constant Injected_Channel_Rank := 2;
+    Temp_Sense_Rank     : constant Regular_Channel_Rank := 1;
+    Vref_Rank           : constant Regular_Channel_Rank := 2;
 
     Beep_GPIO           : GPIO_Point renames Feather_STM32F405.D9;
     Beep_AF             : constant GPIO_Alternate_Function := GPIO_AF_TIM4_3;
@@ -35,6 +32,60 @@ package body Platform is
     Beep_Channel        : constant Timer_Channel := Channel_3;
     Beep_Control        : PWM_Modulator;
 
+    All_Regular_Conversions : constant Regular_Channel_Conversions :=
+        (Temp_Sense_Rank =>
+            (Channel => Temp_Sense_Channel, Sample_Time => Sample_144_Cycles),
+         Vref_Rank       =>
+            (Channel => Vref_Channel,       Sample_Time => Sample_144_Cycles));
+
+    type ADC_Values is array (All_Regular_Conversions'Range) of UInt16;
+
+    procedure Configure_ADC is
+    begin
+        Enable_Clock (Temp_Sense_GPIO);
+        Configure_IO (Temp_Sense_GPIO,
+            (Mode => Mode_Analog,
+             Resistors => Floating));
+        
+        Enable_Clock (ADC_1);
+        Reset_All_ADC_Units;
+
+        Configure_Common_Properties
+            (Mode           => Independent,
+             Prescalar      => PCLK2_Div_2,
+             DMA_Mode       => Disabled,
+             Sampling_Delay => Sampling_Delay_5_Cycles);
+
+        Configure_Unit
+            (ADC_1,
+             Resolution  => ADC_Resolution_12_Bits,
+             Alignment   => Right_Aligned);
+
+        Configure_Regular_Conversions
+            (ADC_1,
+             Continuous  => False,
+             Trigger     => Software_Triggered,
+             Enable_EOC  => True,
+             Conversions => All_Regular_Conversions);
+
+        Enable (ADC_1);
+    end Configure_ADC;
+
+    procedure Read_ADC
+        (Values  : out ADC_Values;
+         Success : out Boolean;
+         Timeout : in Time_Span) is
+    begin
+        for I in Values'Range loop
+            Start_Conversion (ADC_1);
+            Poll_For_Status (ADC_1, Regular_Channel_Conversion_Complete, Success, Timeout);
+            if not Success then
+                return;
+            end if;
+            Values (I) := Conversion_Value (ADC_1);
+            Clear_Status (ADC_1, Regular_Channel_Conversion_Complete);
+        end loop;
+    end Read_ADC;
 
     procedure Initialize is
     begin
@@ -71,41 +122,33 @@ package body Platform is
             Prescaler   => Div2,
             Filter      => 1);
 
-        Enable_Clock (Temp_Sense_ADC);
-        Configure_Unit (Temp_Sense_ADC,
-            Resolution  => ADC_Resolution_12_Bits,
-            Alignment   => Right_Aligned);
-        Configure_Injected_Conversions (Temp_Sense_ADC,
-            AutoInjection   => True,
-            Trigger         => Software_Triggered_Injected,
-            Enable_EOC      => False,
-            Conversions     => ((Temp_Sense_Channel, Sample_3_Cycles, 1),
-                                (VRef_Channel,       Sample_3_Cycles, 2)));
-        Enable (Temp_Sense_ADC);
-        Start_Injected_Conversion (Temp_Sense_ADC);
+        Configure_ADC;
     end Initialize;
 
     procedure Get_Temperature
         (T       : out Celsius;
          Success : out Boolean) is
         type Millivolts is new Float;
+        Vrefint : constant Millivolts := 1_210.0;
+        Vdda    : constant Millivolts := 3_300.0;
+        
+        Values  : ADC_Values;
 
-        Sense_Temp, Sense_Ref : UInt16;
-        Vref    : constant Millivolts := 3_300.0;
+        Vref    : Millivolts;
         Vtemp   : Millivolts;
 
         Tc      : constant Millivolts := 10.0;   -- Temperature coefficient from datasheet (mV/C)
         Vzero   : constant Millivolts := 500.0;  -- Output at zero celsius (mV)
-        Timeout : constant Time_Span := Milliseconds (100);
+        Timeout : constant Time_Span := Milliseconds (50);
     begin
-        Start_Injected_Conversion (Temp_Sense_ADC);
-        Poll_For_Status (Temp_Sense_ADC, Injected_Channel_Conversion_Complete, Success, Timeout);
-        if Success then
-            Sense_Temp := Injected_Conversion_Value (Temp_Sense_ADC, Temp_Sense_Rank);
-            Sense_Ref  := Injected_Conversion_Value (VRef_ADC, VRef_Rank);
-            Vtemp := (Vref * Millivolts (Sense_Temp)) / Millivolts (Sense_Ref);
-            T := Celsius ((Vtemp - Vzero) / Tc);
-        end if;
+        Read_ADC (Values, Success, Timeout);
+        Vtemp := Millivolts (Values (Temp_Sense_Rank));
+        Vref := Millivolts (Values (Vref_Rank));
+
+        -- Scale Vref to Vdda, should be close to (2**12)
+        Vref := Vref * (Vdda / Vrefint);
+        Vtemp := (Vtemp / Vref) * Vdda;
+        T := Celsius ((Vtemp - Vzero) / Tc);
     end Get_Temperature;
 
     procedure Set_PWM

@@ -1,5 +1,6 @@
 with Ada.Real_Time;     use Ada.Real_Time;
 with Platform;          use Platform;
+with Platform.IO;       use Platform.IO;
 
 package body PIDControl is
     Integral : Float := 0.0;
@@ -9,6 +10,7 @@ package body PIDControl is
         Duration : constant Time_Span := Milliseconds (25);
         T        : Time := Clock;
     begin
+        Put_Line ("ALARM");
         Set_PWM (Beep, 50);
         T := T + Duration;
         delay until T;
@@ -59,7 +61,7 @@ package body PIDControl is
         Interval    : constant Time_Span := Milliseconds (Integer (Dt * 1000.0));
         T           : Time := Clock;
 
-        Set_Point   : constant Celsius := 50.0;
+        Set_Point   : constant Celsius := 30.0;
         Temperature : Celsius;
         --RPM         : Hertz;
         Success     : Boolean;
@@ -71,13 +73,18 @@ package body PIDControl is
         Initialize;
 
         loop
+            Set_PWM (Beep, 0);
+            Set_PWM (Fan, 0);
+            delay until Clock + Milliseconds (50);
             Get_Temperature (Temperature, Success);
+            Set_PWM (Fan, Fan_Speed);
+
             if Success = False then
                 Fault_Alarm;
                 Set_PWM (Fan, Percent'Last);
             else
                 Temperature := Constrain (Temperature, -40.0, 125.0);
-                if Temperature > (Set_Point + 10.0) then
+                if Temperature > Set_Point then
                     Fault_Alarm;
                 end if;
 
@@ -93,6 +100,9 @@ package body PIDControl is
 
                 Target := Fan_Speed - Error_I;
                 Target := Constrain (Target, 0, Percent'Last - 1);
+
+                Put_Line ("Temperature = " & Integer (Temperature)'Image & " C");
+                Put_Line ("Target = " & Target'Image);
 
                 Fan_Speed := Target;
                 Set_PWM (Fan, Fan_Speed);

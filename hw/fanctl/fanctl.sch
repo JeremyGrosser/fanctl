@@ -1,0 +1,582 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L power:+12V #PWR01
+U 1 1 60E1F686
+P 2950 800
+F 0 "#PWR01" H 2950 650 50  0001 C CNN
+F 1 "+12V" H 2965 973 50  0000 C CNN
+F 2 "" H 2950 800 50  0001 C CNN
+F 3 "" H 2950 800 50  0001 C CNN
+	1    2950 800 
+	1    0    0    -1  
+$EndComp
+$Comp
+L Motor:Fan_3pin M1
+U 1 1 60E23F34
+P 2950 1300
+F 0 "M1" H 2750 1450 50  0000 L CNN
+F 1 "FAN" H 2500 1150 50  0001 L CNN
+F 2 "Connector_Molex:Molex_KK-254_AE-6410-03A_1x03_P2.54mm_Vertical" H 2950 1210 50  0001 C CNN
+F 3 "http://www.hardwarecanucks.com/forum/attachments/new-builds/16287d1330775095-help-chassis-power-fan-connectors-motherboard-asus_p8z68.jpg" H 2950 1210 50  0001 C CNN
+	1    2950 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Transistor_FET:BS170 Q2
+U 1 1 60E3BB83
+P 2850 2100
+F 0 "Q2" H 3054 2146 50  0000 L CNN
+F 1 "BS170" H 3054 2055 50  0000 L CNN
+F 2 "Package_TO_SOT_THT:TO-92_Inline" H 3050 2025 50  0001 L CIN
+F 3 "https://www.onsemi.com/pub/Collateral/BS170-D.PDF" H 2850 2100 50  0001 L CNN
+	1    2850 2100
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR02
+U 1 1 60E3CCEA
+P 2950 3050
+F 0 "#PWR02" H 2950 2800 50  0001 C CNN
+F 1 "GND" H 2955 2877 50  0000 C CNN
+F 2 "" H 2950 3050 50  0001 C CNN
+F 3 "" H 2950 3050 50  0001 C CNN
+	1    2950 3050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2950 1600 2950 1650
+$Comp
+L Transistor_FET:BS170 Q1
+U 1 1 60E45B4E
+P 1900 2200
+F 0 "Q1" V 1950 2400 50  0000 C CNN
+F 1 "BS170" V 1850 2450 50  0000 C CNN
+F 2 "Package_TO_SOT_THT:TO-92_Inline" H 2100 2125 50  0001 L CIN
+F 3 "https://www.onsemi.com/pub/Collateral/BS170-D.PDF" H 1900 2200 50  0001 L CNN
+	1    1900 2200
+	0    1    -1   0   
+$EndComp
+$Comp
+L Device:R R1
+U 1 1 60E46CCE
+P 1500 1750
+F 0 "R1" V 1293 1750 50  0000 C CNN
+F 1 "1M" V 1384 1750 50  0000 C CNN
+F 2 "" V 1430 1750 50  0001 C CNN
+F 3 "~" H 1500 1750 50  0001 C CNN
+	1    1500 1750
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2950 800  2950 950 
+$Comp
+L Device:R R3
+U 1 1 60E4A275
+P 2200 1950
+F 0 "R3" H 2050 2000 50  0000 L CNN
+F 1 "100k" H 1950 1900 50  0000 L CNN
+F 2 "" V 2130 1950 50  0001 C CNN
+F 3 "~" H 2200 1950 50  0001 C CNN
+	1    2200 1950
+	1    0    0    -1  
+$EndComp
+Connection ~ 2950 950 
+Wire Wire Line
+	2950 950  2950 1100
+$Comp
+L Diode:1N4004 D2
+U 1 1 60E4F002
+P 2950 2900
+F 0 "D2" V 2996 2820 50  0000 R CNN
+F 1 "1N4004" V 2905 2820 50  0000 R CNN
+F 2 "Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal" H 2950 2725 50  0001 C CNN
+F 3 "http://www.vishay.com/docs/88503/1n4001.pdf" H 2950 2900 50  0001 C CNN
+	1    2950 2900
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Diode:1N4004 D1
+U 1 1 60E55101
+P 1750 2600
+F 0 "D1" H 1850 2650 50  0000 C CNN
+F 1 "1N4004" H 1550 2650 50  0000 C CNN
+F 2 "Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal" H 1750 2425 50  0001 C CNN
+F 3 "http://www.vishay.com/docs/88503/1n4001.pdf" H 1750 2600 50  0001 C CNN
+	1    1750 2600
+	-1   0    0    1   
+$EndComp
+$Comp
+L Transistor_FET:BS170 Q3
+U 1 1 60E66B6C
+P 3400 1850
+F 0 "Q3" H 3604 1896 50  0000 L CNN
+F 1 "BS170" H 3604 1805 50  0000 L CNN
+F 2 "Package_TO_SOT_THT:TO-92_Inline" H 3600 1775 50  0001 L CIN
+F 3 "https://www.onsemi.com/pub/Collateral/BS170-D.PDF" H 3400 1850 50  0001 L CNN
+	1    3400 1850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3200 1850 2650 1850
+Wire Wire Line
+	2650 1850 2650 2100
+Wire Wire Line
+	3500 2050 3500 2300
+Wire Wire Line
+	3500 2300 2950 2300
+Wire Wire Line
+	3500 1650 2950 1650
+Connection ~ 2950 1650
+Wire Wire Line
+	2950 1650 2950 1900
+Text Notes 3000 2400 0    50   ~ 0
+Two MOSFETs for more current.
+Text Notes 550  650  0    50   ~ 0
+60 Hz PWM
+$Comp
+L Device:R R2
+U 1 1 60E6FA12
+P 1500 2450
+F 0 "R2" V 1293 2450 50  0000 C CNN
+F 1 "1M" V 1384 2450 50  0000 C CNN
+F 2 "" V 1430 2450 50  0001 C CNN
+F 3 "~" H 1500 2450 50  0001 C CNN
+	1    1500 2450
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2950 2300 2950 2750
+Connection ~ 2950 2300
+Wire Wire Line
+	1700 2100 1200 2100
+Connection ~ 1200 2100
+Wire Wire Line
+	1200 2100 1200 1750
+Wire Wire Line
+	2100 2100 2200 2100
+Connection ~ 2200 2100
+Wire Wire Line
+	2200 1750 2200 1800
+Text Notes 1450 2950 0    50   ~ 0
+Maybe unnecessary diodes
+$Comp
+L Device:R R4
+U 1 1 60E9EE02
+P 6250 1800
+F 0 "R4" H 6320 1846 50  0000 L CNN
+F 1 "1k" H 6320 1755 50  0000 L CNN
+F 2 "" V 6180 1800 50  0001 C CNN
+F 3 "~" H 6250 1800 50  0001 C CNN
+	1    6250 1800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C1
+U 1 1 60EA49B5
+P 6250 2100
+F 0 "C1" H 6365 2146 50  0000 L CNN
+F 1 "0.1uF 50V" H 6365 2055 50  0000 L CNN
+F 2 "" H 6288 1950 50  0001 C CNN
+F 3 "~" H 6250 2100 50  0001 C CNN
+	1    6250 2100
+	1    0    0    -1  
+$EndComp
+Connection ~ 6250 1950
+$Comp
+L power:GND #PWR05
+U 1 1 60EA50AC
+P 6250 2250
+F 0 "#PWR05" H 6250 2000 50  0001 C CNN
+F 1 "GND" H 6255 2077 50  0000 C CNN
+F 2 "" H 6250 2250 50  0001 C CNN
+F 3 "" H 6250 2250 50  0001 C CNN
+	1    6250 2250
+	1    0    0    -1  
+$EndComp
+$Comp
+L Transistor_FET:BS170 Q4
+U 1 1 60EA68FA
+P 5650 1950
+F 0 "Q4" H 5855 1996 50  0000 L CNN
+F 1 "BS170" H 5855 1905 50  0000 L CNN
+F 2 "Package_TO_SOT_THT:TO-92_Inline" H 5850 1875 50  0001 L CIN
+F 3 "https://www.onsemi.com/pub/Collateral/BS170-D.PDF" H 5650 1950 50  0001 L CNN
+	1    5650 1950
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	5850 1950 6250 1950
+$Comp
+L power:+3.3V #PWR03
+U 1 1 60EA8063
+P 5550 1400
+F 0 "#PWR03" H 5550 1250 50  0001 C CNN
+F 1 "+3.3V" H 5565 1573 50  0000 C CNN
+F 2 "" H 5550 1400 50  0001 C CNN
+F 3 "" H 5550 1400 50  0001 C CNN
+	1    5550 1400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5550 1400 5550 1750
+Text Label 5550 2600 2    50   ~ 0
+TACO
+$Comp
+L Diode:1N4004 D3
+U 1 1 60EB7CD4
+P 5550 2300
+F 0 "D3" V 5596 2220 50  0000 R CNN
+F 1 "1N4004" V 5505 2220 50  0000 R CNN
+F 2 "Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal" H 5550 2125 50  0001 C CNN
+F 3 "http://www.vishay.com/docs/88503/1n4001.pdf" H 5550 2300 50  0001 C CNN
+	1    5550 2300
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	5550 2600 5550 2450
+Wire Wire Line
+	1200 2100 1200 2450
+Wire Wire Line
+	1650 1750 2200 1750
+Wire Wire Line
+	1900 2400 1900 2450
+Wire Wire Line
+	1350 1750 1200 1750
+Wire Wire Line
+	1650 2450 1900 2450
+Connection ~ 1900 2450
+Wire Wire Line
+	1900 2450 1900 2600
+Wire Wire Line
+	1350 2450 1200 2450
+Connection ~ 1200 2450
+Wire Wire Line
+	1200 2450 1200 2750
+$Comp
+L power:+12V #PWR04
+U 1 1 60EDE41A
+P 6250 1400
+F 0 "#PWR04" H 6250 1250 50  0001 C CNN
+F 1 "+12V" H 6265 1573 50  0000 C CNN
+F 2 "" H 6250 1400 50  0001 C CNN
+F 3 "" H 6250 1400 50  0001 C CNN
+	1    6250 1400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6250 1400 6250 1650
+Wire Wire Line
+	2200 2100 2650 2100
+Connection ~ 2650 2100
+Wire Wire Line
+	1200 2750 2950 2750
+Connection ~ 2950 2750
+Wire Wire Line
+	2200 1750 2200 950 
+Connection ~ 2200 1750
+Text Notes 4550 800  0    50   ~ 0
+TACO is chopped by PWM\nFAN_PWM should be held low while counting TACO\nTwo rising edges per rotation
+Wire Wire Line
+	900  2600 1600 2600
+$Comp
+L synack-common:MCP9700-E U1
+U 1 1 60FA1D0F
+P 9200 2000
+F 0 "U1" H 9550 2300 50  0000 R CNN
+F 1 "MCP9700-E" H 9700 1700 50  0000 R CNN
+F 2 "Package_TO_SOT_THT:TO-92_Inline" H 10200 1850 50  0001 C CNN
+F 3 "https://ww1.microchip.com/downloads/en/DeviceDoc/20001942G.pdf" H 9200 2000 50  0001 C CNN
+	1    9200 2000
+	1    0    0    -1  
+$EndComp
+Text Label 9650 2000 0    50   ~ 0
+TEMP
+$Comp
+L Device:C C2
+U 1 1 60FA9761
+P 8950 2000
+F 0 "C2" H 8850 1900 50  0000 L CNN
+F 1 "0.1uF 50V" H 8550 1800 50  0000 L CNN
+F 2 "" H 8988 1850 50  0001 C CNN
+F 3 "~" H 8950 2000 50  0001 C CNN
+	1    8950 2000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8950 1850 8950 1650
+Wire Wire Line
+	8950 1650 9200 1650
+Wire Wire Line
+	8950 2150 8950 2350
+Wire Wire Line
+	8950 2350 9200 2350
+$Comp
+L power:+3.3V #PWR06
+U 1 1 60FB0DF1
+P 9200 1250
+F 0 "#PWR06" H 9200 1100 50  0001 C CNN
+F 1 "+3.3V" H 9215 1423 50  0000 C CNN
+F 2 "" H 9200 1250 50  0001 C CNN
+F 3 "" H 9200 1250 50  0001 C CNN
+	1    9200 1250
+	1    0    0    -1  
+$EndComp
+Connection ~ 9200 1650
+$Comp
+L power:GND #PWR07
+U 1 1 60FB15C2
+P 9200 2350
+F 0 "#PWR07" H 9200 2100 50  0001 C CNN
+F 1 "GND" H 9205 2177 50  0000 C CNN
+F 2 "" H 9200 2350 50  0001 C CNN
+F 3 "" H 9200 2350 50  0001 C CNN
+	1    9200 2350
+	1    0    0    -1  
+$EndComp
+Connection ~ 9200 2350
+$Comp
+L Device:R R5
+U 1 1 60FB1FE4
+P 9200 1500
+F 0 "R5" H 9270 1546 50  0000 L CNN
+F 1 "0" H 9270 1455 50  0000 L CNN
+F 2 "" V 9130 1500 50  0001 C CNN
+F 3 "~" H 9200 1500 50  0001 C CNN
+	1    9200 1500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9200 1350 9200 1250
+Text Notes 7550 600  0    50   ~ 0
+Adjust RC values to filter digital noise
+Wire Notes Line
+	500  3500 11200 3500
+$Comp
+L power:+12V #PWR09
+U 1 1 60E54EF3
+P 1800 4550
+F 0 "#PWR09" H 1800 4400 50  0001 C CNN
+F 1 "+12V" H 1950 4600 50  0000 C CNN
+F 2 "" H 1800 4550 50  0001 C CNN
+F 3 "" H 1800 4550 50  0001 C CNN
+	1    1800 4550
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR08
+U 1 1 60E56F7F
+P 1800 4450
+F 0 "#PWR08" H 1800 4300 50  0001 C CNN
+F 1 "+3.3V" H 1950 4500 50  0000 C CNN
+F 2 "" H 1800 4450 50  0001 C CNN
+F 3 "" H 1800 4450 50  0001 C CNN
+	1    1800 4450
+	1    0    0    -1  
+$EndComp
+Text Label 1800 4350 0    50   ~ 0
+TACO
+Text Label 1800 4250 0    50   ~ 0
+PWM
+$Comp
+L Connector:Screw_Terminal_01x05 J2
+U 1 1 60E6A52C
+P 1600 4450
+F 0 "J2" H 1518 4117 50  0000 C CNN
+F 1 "Screw_Terminal_01x05" H 1518 4116 50  0001 C CNN
+F 2 "" H 1600 4450 50  0001 C CNN
+F 3 "~" H 1600 4450 50  0001 C CNN
+	1    1600 4450
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	1800 4550 2200 4550
+Connection ~ 1800 4550
+Wire Wire Line
+	1800 4450 2000 4450
+Wire Wire Line
+	2850 4450 2850 4550
+Connection ~ 1800 4450
+$Comp
+L Device:R R6
+U 1 1 60E83428
+P 2450 5000
+F 0 "R6" H 2520 5046 50  0000 L CNN
+F 1 "470" H 2520 4955 50  0000 L CNN
+F 2 "" V 2380 5000 50  0001 C CNN
+F 3 "~" H 2450 5000 50  0001 C CNN
+	1    2450 5000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R7
+U 1 1 60E8368E
+P 2850 5000
+F 0 "R7" H 2920 5046 50  0000 L CNN
+F 1 "47" H 2920 4955 50  0000 L CNN
+F 2 "" V 2780 5000 50  0001 C CNN
+F 3 "~" H 2850 5000 50  0001 C CNN
+	1    2850 5000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:LED D5
+U 1 1 60E7C72F
+P 2850 4700
+F 0 "D5" V 2889 4582 50  0000 R CNN
+F 1 "3V3" V 2798 4582 50  0000 R CNN
+F 2 "" H 2850 4700 50  0001 C CNN
+F 3 "~" H 2850 4700 50  0001 C CNN
+	1    2850 4700
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:LED D4
+U 1 1 60E7C231
+P 2450 4700
+F 0 "D4" V 2489 4582 50  0000 R CNN
+F 1 "12V" V 2398 4582 50  0000 R CNN
+F 2 "" H 2450 4700 50  0001 C CNN
+F 3 "~" H 2450 4700 50  0001 C CNN
+	1    2450 4700
+	0    -1   -1   0   
+$EndComp
+Text Label 900  2600 2    50   ~ 0
+PWM
+Text Label 6550 1950 0    50   ~ 0
+TACI
+Wire Wire Line
+	6550 1950 6250 1950
+$Comp
+L Motor:Fan_4pin M2
+U 1 1 60E968BD
+P 3800 1400
+F 0 "M2" H 3600 1650 50  0000 L CNN
+F 1 "FAN" H 3850 1250 50  0001 L CNN
+F 2 "" H 3800 1410 50  0001 C CNN
+F 3 "http://www.formfactors.org/developer%5Cspecs%5Crev1_2_public.pdf" H 3800 1410 50  0001 C CNN
+	1    3800 1400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3500 1650 3800 1650
+Connection ~ 3500 1650
+Wire Wire Line
+	2200 950  2950 950 
+Wire Wire Line
+	3800 950  2950 950 
+Text Label 3400 1300 2    50   ~ 0
+TACI
+NoConn ~ 3500 1500
+Wire Wire Line
+	3800 1600 3800 1650
+Wire Wire Line
+	3800 950  3800 1100
+$Comp
+L Connector:Screw_Terminal_01x03 J1
+U 1 1 60EB1468
+P 4400 1350
+F 0 "J1" H 4350 1600 50  0000 L CNN
+F 1 "FAN" H 4250 1100 50  0000 L CNN
+F 2 "" H 4400 1350 50  0001 C CNN
+F 3 "~" H 4400 1350 50  0001 C CNN
+	1    4400 1350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4200 1450 4200 1650
+Wire Wire Line
+	4200 1650 3800 1650
+Connection ~ 3800 1650
+Wire Wire Line
+	3800 950  4050 950 
+Wire Wire Line
+	4050 950  4050 1350
+Wire Wire Line
+	4050 1350 4200 1350
+Connection ~ 3800 950 
+Text Label 4200 1250 2    50   ~ 0
+TACI
+Text Label 2500 1300 2    50   ~ 0
+TACI
+Wire Wire Line
+	2500 1300 2650 1300
+Wire Wire Line
+	3400 1300 3500 1300
+$Comp
+L Device:C C4
+U 1 1 60EDE802
+P 2200 5000
+F 0 "C4" H 2200 5100 50  0000 L CNN
+F 1 "10uF" H 2200 4900 50  0000 L CNN
+F 2 "" H 2238 4850 50  0001 C CNN
+F 3 "~" H 2200 5000 50  0001 C CNN
+	1    2200 5000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C3
+U 1 1 60EDEB6F
+P 2000 5000
+F 0 "C3" H 2000 5100 50  0000 L CNN
+F 1 "10uF" H 2000 4900 50  0000 L CNN
+F 2 "" H 2038 4850 50  0001 C CNN
+F 3 "~" H 2000 5000 50  0001 C CNN
+	1    2000 5000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2000 4850 2000 4450
+Connection ~ 2000 4450
+Wire Wire Line
+	2000 4450 2850 4450
+Wire Wire Line
+	2200 4550 2200 4850
+Connection ~ 2200 4550
+Wire Wire Line
+	2200 4550 2450 4550
+Wire Wire Line
+	1800 4650 1800 5150
+Wire Wire Line
+	1800 5150 2000 5150
+Connection ~ 2000 5150
+Wire Wire Line
+	2000 5150 2200 5150
+Connection ~ 2200 5150
+Connection ~ 2450 5150
+Wire Wire Line
+	2450 5150 2850 5150
+$Comp
+L power:GND #PWR010
+U 1 1 60EE2BD1
+P 1800 5150
+F 0 "#PWR010" H 1800 4900 50  0001 C CNN
+F 1 "GND" H 1805 4977 50  0000 C CNN
+F 2 "" H 1800 5150 50  0001 C CNN
+F 3 "" H 1800 5150 50  0001 C CNN
+	1    1800 5150
+	1    0    0    -1  
+$EndComp
+Connection ~ 1800 5150
+Wire Wire Line
+	2200 5150 2450 5150
+Wire Notes Line
+	7500 500  7500 3500
+Wire Notes Line
+	4500 6000 500  6000
+Wire Notes Line
+	4500 500  4500 6000
+$EndSCHEMATC

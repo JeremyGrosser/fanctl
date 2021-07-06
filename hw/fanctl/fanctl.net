@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /archive/u1/src/fanctl/hw/fanctl/fanctl.sch)
-    (date "Tue 06 Jul 2021 12:01:11 PM PDT")
+    (date "Tue 06 Jul 2021 01:01:46 PM PDT")
     (tool "Eeschema 5.1.9+dfsg1-1")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -79,7 +79,7 @@
       (sheetpath (names /) (tstamps /))
       (tstamp 60E6FA12))
     (comp (ref R4)
-      (value 1k)
+      (value 1K)
       (footprint Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal)
       (datasheet ~)
       (libsource (lib Device) (part R) (description Resistor))
@@ -191,7 +191,7 @@
       (sheetpath (names /) (tstamps /))
       (tstamp 60F8B616))
     (comp (ref R8)
-      (value 1k)
+      (value 1K)
       (footprint Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal)
       (datasheet ~)
       (libsource (lib Device) (part R) (description Resistor))

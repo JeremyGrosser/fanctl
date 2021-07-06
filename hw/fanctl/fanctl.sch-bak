@@ -145,8 +145,6 @@ Wire Wire Line
 	2950 1650 2950 1900
 Text Notes 3000 2400 0    50   ~ 0
 Two MOSFETs for more current.
-Text Notes 550  650  0    50   ~ 0
-60 Hz PWM
 $Comp
 L Device:R R2
 U 1 1 60E6FA12
@@ -178,7 +176,7 @@ L Device:R R4
 U 1 1 60E9EE02
 P 6250 1800
 F 0 "R4" H 6320 1846 50  0000 L CNN
-F 1 "1k" H 6320 1755 50  0000 L CNN
+F 1 "1K" H 6320 1755 50  0000 L CNN
 F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 6180 1800 50  0001 C CNN
 F 3 "~" H 6250 1800 50  0001 C CNN
 	1    6250 1800
@@ -631,6 +629,8 @@ F 3 "~" H 5550 1600 50  0001 C CNN
 $EndComp
 Text Label 2950 1650 2    50   ~ 0
 FAN-
+Text Notes 550  650  0    50   ~ 0
+60 Hz PWM
 Text Notes 3050 4350 0    50   ~ 0
-5mm Green LED\nVf = 2.181V @ 19.52 mA
+5mm Green LED\nVf = 2.181V @ 19.52 mA +1.6°C
 $EndSCHEMATC

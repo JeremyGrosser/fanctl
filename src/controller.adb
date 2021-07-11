@@ -1,13 +1,13 @@
+with Units;    use Units;
 with RP.Timer; use RP.Timer;
 with RP.Device;
 with Board;
 
 package body Controller is
 
-   Target_Speed   : RPM := 1000;
+   Target_Speed   : constant RPM := 1000;
    Output         : Duty_Cycle := Duty_Cycle'Last / 2;
    Fan_Speed      : RPM;
-   Temperature    : Celsius := 25.0;
    T              : Time := Clock;
 
    procedure Initialize is
@@ -17,27 +17,15 @@ package body Controller is
       RP.Device.Timer.Delay_Seconds (1);
    end Initialize;
 
-   procedure Tick is
-      function Clamp (X : Float)
-         return Float;
-
-      function Clamp (X : Float)
-         return Float
-      is
-      begin
-         if X > 1.0 then
-            return 1.0;
-         elsif X < 0.0 then
-            return 0.0;
-         else
-            return X;
-         end if;
-      end Clamp;
+   procedure Update is
    begin
       Fan_Speed := Board.Measure_TACO;
 
       if Output > 0 and Fan_Speed = 0 then
-         Board.Beeper.Beep (800, 25, 5);
+         Board.Beeper.Beep
+            (Frequency => 800,
+             Length    => 25,
+             Count     => 5);
       end if;
 
       if Fan_Speed > Target_Speed and Output > Duty_Cycle'First then
@@ -50,6 +38,6 @@ package body Controller is
 
       T := T + Milliseconds (10_000);
       RP.Device.Timer.Delay_Until (T);
-   end Tick;
+   end Update;
 
 end Controller;

@@ -1,0 +1,48 @@
+-- begin auto-gpr-with --
+--  This section was automatically added by Alire
+with "hal.gpr";
+with "pico_bsp.gpr";
+-- end auto-gpr-with --
+
+project Fanctl is
+
+   for Runtime ("Ada") use "zfp-cortex-m0p";
+   for Target use "arm-eabi";
+   for Main use ("main.adb");
+   for Languages use ("Ada");
+   for Source_Dirs use ("src");
+   for Object_Dir use "obj";
+   for Create_Missing_Dirs use "True";
+
+   package Compiler is
+       for Switches ("Ada") use (
+           "-O0",
+           "-g",
+           "-gnatwa",       --  All warnings
+           "-gnatwl",       --  Elaboration warnings
+           "-gnatVa",       --  Validity checks
+           "-gnatyg",       --  Style checks
+           "-gnatyM120",    --  Line length
+           "-gnatyO",       --  Overriding subprograms must be explicitly marked
+           "-gnata",        --  Assertions
+           "-gnatn",        --  Enable inlining
+           "-gnatQ",        --  Keep going after errors
+           "-gnatw.X",      --  Hide No_Exception_Propagation warnings
+           "-gnatwB",       --  Hide Warn_On_Bad_Fixed_Value
+           "-fstack-usage", --  Output stack usage information
+           "-ffunction-sections",
+           "-fdata-sections"
+       );
+   end Compiler;
+
+   package Linker is
+      for Default_Switches ("Ada") use
+          Pico_BSP.Linker_Switches & (
+              "-Wl,-gc-sections",
+              "-Wl,-print-memory-usage",
+              "-Wl,-Map=main.map"
+          );
+   end Linker;
+
+
+end Fanctl;

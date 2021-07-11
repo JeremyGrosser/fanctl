@@ -4,6 +4,6 @@ procedure Main is
 begin
    Controller.Initialize;
    loop
-      Controller.Tick;
+      Controller.Update;
    end loop;
 end Main;

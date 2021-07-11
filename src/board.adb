@@ -1,5 +1,6 @@
-with HAL; use HAL;
+with HAL;
 with RP.Timer; use RP.Timer;
+with RP.GPIO;  use RP.GPIO;
 with RP;       use RP;
 with RP.Clock;
 with RP.ADC;
@@ -47,13 +48,13 @@ package body Board is
          Set_Mode (OUT_Slice, Free_Running);
          Set_Frequency (OUT_Slice, PWM_Frequency);
          Set_Interval (OUT_Slice, PWM_Interval);
-         Set_Invert (OUT_Slice, True, True);
+         Set_Invert (OUT_Slice, Channel_A => True, Channel_B => True);
          Set_Output (Duty_Cycle'Last);
          Enable (OUT_Slice);
       end;
 
       Beeper.Beep
-         (Duration  => 50,
+         (Length    => 50,
           Frequency => 600);
 
       Console.New_Line;
@@ -96,6 +97,7 @@ package body Board is
       (DC : Duty_Cycle)
    is
       use RP.PWM;
+      use HAL;
       Conversion : constant Period := (PWM_Interval / Period (Duty_Cycle'Last));
       P          : constant Period := (Period (DC) * Conversion) + 1;
    begin

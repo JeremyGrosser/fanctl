@@ -1,8 +1,6 @@
-with Units; use Units;
-
 package Controller is
 
    procedure Initialize;
-   procedure Tick;
+   procedure Update;
 
 end Controller;

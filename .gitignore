@@ -1,0 +1,6 @@
+*.adt
+*.ali
+*.swp
+obj
+alire
+alire.lock

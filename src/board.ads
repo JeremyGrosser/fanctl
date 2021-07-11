@@ -1,5 +1,4 @@
 with Units;   use Units;
-with RP.GPIO; use RP.GPIO;
 with RP.Device;
 
 with Serial_Console;

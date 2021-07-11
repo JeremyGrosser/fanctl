@@ -6,36 +6,28 @@ package body Piezo is
 
    procedure Beep
       (This      : Beeper;
-       Duration  : Natural := 1_000;
        Frequency : Hertz := 440;
+       Duration  : Natural := 1_000;
        Count     : Positive := 1)
    is
       use RP.GPIO;
       use RP.PWM;
+      Slice  : constant PWM_Slice := To_PWM (This.Point.all).Slice;
       Period : constant := 10_000;
       Half   : constant := Period / 2;
    begin
-      if This.Point_A /= null then
-         Configure (This.Point_A.all, Output, Floating, RP.GPIO.PWM);
-      end if;
+      Configure (This.Point.all, Output, Floating, RP.GPIO.PWM);
 
-      if This.Point_B /= null then
-         Configure (This.Point_B.all, Output, Floating, RP.GPIO.PWM);
-      end if;
-
-      Set_Mode (This.Slice, Free_Running);
-      Set_Frequency (This.Slice, Frequency * Period);
-      Set_Interval (This.Slice, Period);
-      Set_Invert (This.Slice,
-         Channel_A => False,
-         Channel_B => True);
-      Set_Duty_Cycle (This.Slice, 0, 0);
-      Enable (This.Slice);
+      Set_Mode (Slice, Free_Running);
+      Set_Frequency (Slice, Frequency * Period);
+      Set_Interval (Slice, Period);
+      Set_Duty_Cycle (Slice, 0, 0);
+      Enable (Slice);
 
       for I in 1 .. Count loop
-         Set_Duty_Cycle (This.Slice, Half, Half);
+         Set_Duty_Cycle (Slice, Half, Half);
          RP.Device.Timer.Delay_Milliseconds (Duration);
-         Set_Duty_Cycle (This.Slice, 0, 0);
+         Set_Duty_Cycle (Slice, 0, 0);
          if I /= Count then
             RP.Device.Timer.Delay_Milliseconds (Duration);
          end if;

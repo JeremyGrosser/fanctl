@@ -1,38 +1,55 @@
+with RP.Timer; use RP.Timer;
+with RP.Device;
 with Board;
 
 package body Controller is
 
-   Step        : constant Duty_Cycle := 10;
-   Output      : Duty_Cycle := 0;
-   Fan_Speed   : RPM;
-   Temperature : Celsius := 25.0;
+   Target_Speed   : RPM := 1000;
+   Output         : Duty_Cycle := Duty_Cycle'Last / 2;
+   Fan_Speed      : RPM;
+   Temperature    : Celsius := 25.0;
+   T              : Time := Clock;
 
-   function Target_Speed
-      return RPM
-   is
+   procedure Initialize is
    begin
-      if Temperature > 20.0 then
-         return RPM'Last;
-      else
-         return RPM'First;
-      end if;
-   end Target_Speed;
+      Board.Initialize;
+      Board.Set_Output (Output);
+      RP.Device.Timer.Delay_Seconds (1);
+   end Initialize;
 
-   procedure Initialize renames Board.Initialize;
+   procedure Tick is
+      function Clamp (X : Float)
+         return Float;
 
-   procedure Run is
-   begin
-      loop
-         Fan_Speed := Board.Measure_TACO;
-         Temperature := Board.Measure_TEMP;
-
-         if Target_Speed > Fan_Speed then
-            Output := Output + Step;
-         elsif Target_Speed < Fan_Speed then
-            Output := Output - Step;
+      function Clamp (X : Float)
+         return Float
+      is
+      begin
+         if X > 1.0 then
+            return 1.0;
+         elsif X < 0.0 then
+            return 0.0;
+         else
+            return X;
          end if;
-         Board.Set_Output (Output);
-      end loop;
-   end Run;
+      end Clamp;
+   begin
+      Fan_Speed := Board.Measure_TACO;
+
+      if Output > 0 and Fan_Speed = 0 then
+         Board.Beeper.Beep (800, 25, 5);
+      end if;
+
+      if Fan_Speed > Target_Speed and Output > Duty_Cycle'First then
+         Output := Output - 1;
+      elsif Fan_Speed < Target_Speed and Output < Duty_Cycle'Last then
+         Output := Output + 1;
+      end if;
+      Board.Set_Output (Output);
+      Board.Console.Put_Line (Fan_Speed'Image & "," & Output'Image);
+
+      T := T + Milliseconds (10_000);
+      RP.Device.Timer.Delay_Until (T);
+   end Tick;
 
 end Controller;

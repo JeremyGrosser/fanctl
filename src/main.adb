@@ -3,5 +3,7 @@ with Controller;
 procedure Main is
 begin
    Controller.Initialize;
-   Controller.Run;
+   loop
+      Controller.Tick;
+   end loop;
 end Main;

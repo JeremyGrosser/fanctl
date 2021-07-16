@@ -2,7 +2,7 @@ with Ada.Real_Time; use Ada.Real_Time;
 
 package PID_Control is
 
-   type Real is delta 0.001 digits 4;
+   type Real is delta 0.001 digits 5 range -10.0 .. 10.0;
 
    type PID_State is private;
    type PID_Controller is tagged record

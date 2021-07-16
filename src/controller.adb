@@ -11,7 +11,7 @@ package body Controller is
    procedure Initialize is
    begin
       PID.Kp := 0.3;
-      PID.Ki := 0.3;
+      PID.Ki := 0.2;
       PID.Kd := Real'Small;
       PID.Setpoint := 0.5;
    end Initialize;

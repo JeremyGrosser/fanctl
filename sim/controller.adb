@@ -4,15 +4,25 @@ with Ada.Text_IO; use Ada.Text_IO;
 package body Controller is
 
    PID    : PID_Controller;
-   Input  : Real := 0.0;
-   Output : Real := 0.0;
+   Input  : Real := 1.0;
+   Output : Real := 1.0;
 
    function Simulate (PV : Real)
       return Real
    is
-      RV : Real;
+      Duty_Cycle : Natural;
+      RPM        : Natural;
+      RV         : Real;
    begin
-      RV := PV;
+      Duty_Cycle := Natural (PV * 100.0);
+      RPM := Duty_Cycle * 12;
+      RPM := RPM - (RPM mod 20) + 100;
+      RV := Real (Float (RPM) / 1200.0);
+      Put ("RPM=" & RPM'Image);
+      Put (" Duty_Cycle=" & Duty_Cycle'Image);
+      Put (" RV=" & RV'Image & " ");
+      PID.Print;
+      New_Line;
       return RV;
    end Simulate;
 
@@ -20,25 +30,20 @@ package body Controller is
    begin
       PID.Dt := 1.0;
       PID.Kp := 0.3;
-      PID.Ki := 0.3;
+      PID.Ki := 0.2;
       PID.Kd := Real'Small;
-      PID.Setpoint := 0.51;
+      PID.Setpoint := 0.50;
    end Initialize;
 
    procedure Update is
-      Duty_Cycle : Natural := 0;
-      RPM        : Natural := 0;
    begin
-      Output := Simulate (Input);
-      Input := PID.Update (Output);
-
-      Duty_Cycle := Natural (Output * 100.0);
-      RPM := Duty_Cycle * 12;
-
-      Put ("RPM=" & RPM'Image);
-      Put (" Duty_Cycle=" & Duty_Cycle'Image & " ");
-      PID.Print;
-      New_Line;
+      Input := Simulate (Output);
+      Output := PID.Update (Input);
+      if Output < 0.0 then
+         Output := 0.0;
+      elsif Output > 1.0 then
+         Output := 1.0;
+      end if;
 
       --PID.Wait;
    end Update;

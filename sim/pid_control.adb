@@ -1,5 +1,4 @@
-with Board; use Board;
-with RP.Device;
+with Ada.Text_IO; use Ada.Text_IO;
 
 package body PID_Control is
 
@@ -24,11 +23,16 @@ package body PID_Control is
       (This : in out PID_Controller)
    is
    begin
-      This.State.T := This.State.T + Time (Float (This.Dt) * Float (Ticks_Per_Second));
-      if not RP.Device.Timer.Enabled then
-         RP.Device.Timer.Enable;
-      end if;
-      RP.Device.Timer.Delay_Until (This.State.T);
+      This.State.T := This.State.T + Milliseconds (Integer (This.Dt * 1000.0));
+      delay until This.State.T;
    end Wait;
+
+   procedure Print
+      (This : in out PID_Controller)
+   is
+   begin
+      Put ("Error=" & This.State.Previous_Error'Image);
+      Put (" Integral=" & This.State.Integral'Image);
+   end Print;
 
 end PID_Control;

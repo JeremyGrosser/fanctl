@@ -1,4 +1,4 @@
-with RP.Timer; use RP.Timer;
+with Ada.Real_Time; use Ada.Real_Time;
 
 package PID_Control is
 
@@ -20,6 +20,9 @@ package PID_Control is
        return Real;
 
    procedure Wait
+      (This : in out PID_Controller);
+
+   procedure Print
       (This : in out PID_Controller);
 
 private

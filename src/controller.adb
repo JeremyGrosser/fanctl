@@ -1,28 +1,34 @@
 with PID_Control; use PID_Control;
-with Units;    use Units;
-with RP.Timer; use RP.Timer;
-with RP.Device;
-with Board;
+with Units;       use Units;
+with Board;       use Board;
 
 package body Controller is
 
-   PID : PID_Controller;
+   PID    : PID_Controller;
+   Input  : Real := 0.0;
+   Output : Real := 0.0;
 
    procedure Initialize is
    begin
-      Board.Initialize;
-      Board.Set_Output (Duty_Cycle'Last);
-      PID.Dt := 1.0;
-      PID.Setpoint := 1000.0;
-      PID.Wait;
+      PID.Kp := 0.3;
+      PID.Ki := 0.3;
+      PID.Kd := Real'Small;
+      PID.Setpoint := 0.5;
    end Initialize;
 
    procedure Update is
-      Input  : constant Real := Real (Board.Measure_TACO);
-      Output : constant Real := PID.Update (Input);
+      Input_RPM : constant RPM := Measure_TACO;
+      Output_DC : Duty_Cycle;
    begin
-      Board.Set_Output (Duty_Cycle (Output));
-      Board.Console.Put_Line (Integer (Input)'Image & "," & Integer (Output)'Image);
+      Input := Real (Float (Input_RPM) / Float (Max_RPM));
+      Output := PID.Update (Input);
+      Output_DC := Duty_Cycle (Float (Output) * Float (Duty_Cycle'Last));
+      Set_Output (Output_DC);
+
+      Console.Put ("RPM=" & Input_RPM'Image);
+      Console.Put (" Output_DC=" & Output_DC'Image & " ");
+      Console.New_Line;
+
       PID.Wait;
    end Update;
 

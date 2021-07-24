@@ -16,7 +16,7 @@ project Fanctl is
 
    package Compiler is
        for Switches ("Ada") use (
-           "-O0",
+           "-O3",
            "-g",
            "-gnatwa",       --  All warnings
            "-gnatwl",       --  Elaboration warnings

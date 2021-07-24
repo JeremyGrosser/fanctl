@@ -1,6 +1,8 @@
 generic
    type Real is delta <> digits <>;
-package Generic_PID_Control is
+package Generic_PID_Control
+   with Pure
+is
 
    type PID_Controller is tagged record
       Dt         : Real := 1.0; --  seconds between calls to Update

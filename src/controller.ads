@@ -1,6 +1,7 @@
 package Controller is
 
    procedure Initialize;
-   procedure Update;
+   procedure Run
+      with No_Return;
 
 end Controller;

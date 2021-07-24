@@ -3,7 +3,5 @@ with Controller;
 procedure Main is
 begin
    Controller.Initialize;
-   loop
-      Controller.Update;
-   end loop;
+   Controller.Run;
 end Main;

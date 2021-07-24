@@ -1,8 +1,8 @@
 with RP.Timer; use RP.Timer;
 
-package PID_Control is
-
-   type Real is delta 0.001 digits 4;
+generic
+   type Real is delta <> digits <>;
+package Generic_PID_Control is
 
    type PID_State is private;
    type PID_Controller is tagged record
@@ -30,4 +30,4 @@ private
       Integral       : Real := 0.0;
    end record;
 
-end PID_Control;
+end Generic_PID_Control;

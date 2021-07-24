@@ -1,7 +1,7 @@
 with Board; use Board;
 with RP.Device;
 
-package body PID_Control is
+package body Generic_PID_Control is
 
    function Update
       (This          : in out PID_Controller;
@@ -31,4 +31,4 @@ package body PID_Control is
       RP.Device.Timer.Delay_Until (This.State.T);
    end Wait;
 
-end PID_Control;
+end Generic_PID_Control;

@@ -4,6 +4,8 @@ with RP.Device;
 with Fixed_PID_Control; use Fixed_PID_Control;
 with Units; use Units;
 with Board; use Board;
+with Console;
+with Shell;
 
 procedure Main is
    PID : PID_Controller :=
@@ -16,33 +18,10 @@ procedure Main is
 
    Step : Fixed := 0.01;
 
-   procedure Process_Command
-      (Cmd : Character)
-   is
-   begin
-      case Cmd is
-         when 'P' => PID.Kp := PID.Kp + Step;
-         when 'p' => PID.Kp := PID.Kp - Step;
-         when 'I' => PID.Ki := PID.Ki + Step;
-         when 'i' => PID.Ki := PID.Ki - Step;
-         when 'D' => PID.Kd := PID.Kd + Step;
-         when 'd' => PID.Kd := PID.Kd - Step;
-         when 'S' => PID.Setpoint := PID.Setpoint + Step;
-         when 's' => PID.Setpoint := PID.Setpoint - Step;
-         when 'T' => PID.Dt := PID.Dt + 1.0;
-         when 't' => PID.Dt := PID.Dt - 1.0;
-         when 'X' => Step := Step * 10.0;
-         when 'x' => Step := Step / 10.0;
-         when others =>
-            Console.Put_Line ("Unknown command: " & Cmd);
-      end case;
-   end Process_Command;
-
    Max_RPM   : Fixed := 10_000.0;
    Output_DC : Duty_Cycle;
    T         : Time;
    TACO      : RPM;
-   C         : Character;
 
    Multiple : constant Fixed := 1.0 / Fixed'Small;
 begin
@@ -77,32 +56,14 @@ begin
 
       if PID.Output > 0.0 and TACO = 0 then
          Console.Put_Line ("Fan not spinning!");
-         Beeper.Beep (Length => 100, Frequency => 800, Count => 3);
+         --  Beeper.Beep (Length => 100, Frequency => 800, Count => 3);
       end if;
 
       T := T + Ticks_Per_Second * Time (PID.Dt);
+      Shell.Prompt;
       while Clock < T loop
-         Console.Get (C);
-         if C in 'A' .. 'z' then
-            Process_Command (C);
-            Console.Put_Line (C & "");
-            declare
-               Kp : constant Integer := Integer (PID.Kp * Multiple);
-               Ki : constant Integer := Integer (PID.Ki * Multiple);
-               Kd : constant Integer := Integer (PID.Kd * Multiple);
-               Dt : constant Integer := Integer (PID.Dt);
-               Sp : constant Integer := Integer (PID.Setpoint * Multiple);
-               Step_I : constant Integer := Integer (Step * Multiple);
-            begin
-               Console.Put_Line
-                  ("Kp=" & Kp'Image &
-                   " Ki=" & Ki'Image &
-                   " Kd=" & Kd'Image &
-                   " Dt=" & Dt'Image &
-                   " Sp=" & Sp'Image &
-                   " Step=" & Step_I'Image);
-            end;
-         end if;
+         Shell.Poll;
       end loop;
+      Console.New_Line;
    end loop;
 end Main;

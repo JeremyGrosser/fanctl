@@ -32,9 +32,9 @@ package body Board is
       RP.PWM.Initialize;
       RP.ADC.Enable;
 
-      UART_RX.Configure (Output, Floating, UART);
-      UART_TX.Configure (Output, Floating, UART);
-      RP.Device.UART_0.Configure (Config => (others => <>));
+      Pico.LED.Configure (Output);
+
+      Console.Initialize;
 
       FAN_TACO.Configure (Output, Pull_Down, RP.GPIO.PWM, Schmitt => True);
       FAN_PWM.Configure (Output, Pull_Up, RP.GPIO.PWM);

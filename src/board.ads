@@ -1,14 +1,13 @@
 with Units;   use Units;
 with RP.Device;
 
-with Serial_Console;
+with Console;
 with Piezo;
 with Pico;
 
 package Board is
 
    Beeper  : Piezo.Beeper (Pico.GP18'Access);
-   Console : Serial_Console.Port (RP.Device.UART_0'Access);
    Max_RPM : RPM := 1800;
 
    procedure Initialize;

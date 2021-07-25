@@ -53,9 +53,9 @@ package body Board is
          Enable (OUT_Slice);
       end;
 
-      Beeper.Beep
-         (Length    => 50,
-          Frequency => 600);
+      --  Beeper.Beep
+      --     (Length    => 50,
+      --      Frequency => 600);
 
       Console.New_Line;
       Console.Put_Line ("ready.");

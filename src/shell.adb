@@ -4,7 +4,6 @@
 --  SPDX-License-Identifier: BSD-3-Clause
 --
 with Console;
-with Pico;
 
 package body Shell is
 
@@ -57,7 +56,6 @@ package body Shell is
                I := I + 1;
             end if;
       end case;
-      Pico.LED.Toggle;
    end Poll;
 
 end Shell;

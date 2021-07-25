@@ -3,7 +3,7 @@
 --
 --  SPDX-License-Identifier: BSD-3-Clause
 --
-with HAL; use HAL;
+with HAL;
 with HAL.UART; use HAL.UART;
 with RP.UART; use RP.UART;
 with RP.Device;
@@ -46,6 +46,7 @@ package body Console is
    end Put;
 
    procedure Put (C : Character) is
+      use HAL;
       Data   : constant UART_Data_8b (1 .. 1) := (1 => UInt8 (Character'Pos (C)));
       Status : UART_Status;
    begin

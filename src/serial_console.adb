@@ -53,11 +53,15 @@ package body Serial_Console is
       Data   : UART_Data_8b (1 .. 1);
       Status : UART_Status;
    begin
-      This.UART.Receive (Data, Status, 0);
-      if Status /= Ok then
-         raise Console_Error;
-      end if;
-      Ch := Character'Val (Integer (Data (1)));
+      This.UART.Receive (Data, Status, 1);
+      case Status is
+         when Err_Timeout =>
+            Ch := ASCII.NUL;
+         when Ok =>
+            Ch := Character'Val (Integer (Data (1)));
+         when others =>
+            Ch := ASCII.DLE;
+      end case;
    end Get;
 
    procedure Get
@@ -113,5 +117,19 @@ package body Serial_Console is
       --  Buffer is full but no LF was seen, return the whole thing.
       return This.Buffer;
    end Get_Line;
+
+   function Has_Data
+      (This : in out Port)
+      return Boolean
+   is
+      use RP.UART;
+   begin
+      case This.UART.Receive_Status is
+         when Empty | Invalid =>
+            return False;
+         when others =>
+            return True;
+      end case;
+   end Has_Data;
 
 end Serial_Console;

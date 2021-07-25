@@ -4,11 +4,12 @@
 --  SPDX-License-Identifier: BSD-3-Clause
 --
 with HAL.UART;
+with RP.UART;
 
 package Serial_Console is
 
    type Port
-      (UART : not null HAL.UART.Any_UART_Port)
+      (UART : not null access RP.UART.UART_Port)
    is tagged private;
 
    Console_Error : exception;
@@ -41,10 +42,14 @@ package Serial_Console is
        Echo : Boolean := False)
       return String;
 
+   function Has_Data
+      (This : in out Port)
+      return Boolean;
+
 private
 
    type Port
-      (UART : not null HAL.UART.Any_UART_Port)
+      (UART : not null access RP.UART.UART_Port)
    is tagged record
       Buffer : String (1 .. 64);
    end record;

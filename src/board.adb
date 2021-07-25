@@ -58,7 +58,7 @@ package body Board is
           Frequency => 600);
 
       Console.New_Line;
-      Console.Put_Line ("Ready.");
+      Console.Put_Line ("ready.");
    end Initialize;
 
    function Measure_TACO

@@ -39,7 +39,6 @@ procedure Main is
    end Process_Command;
 
    Max_RPM   : Fixed := 10_000.0;
-   Average   : Fixed := 1.0;
    Output_DC : Duty_Cycle;
    T         : Time;
    TACO      : RPM;
@@ -76,8 +75,7 @@ begin
 
       Console.New_Line;
 
-      Average := (Average + PID.Input) / 2.0;
-      if PID.Output > 0.0 and Average = 0.0 then
+      if PID.Output > 0.0 and TACO = 0 then
          Console.Put_Line ("Fan not spinning!");
          Beeper.Beep (Length => 100, Frequency => 800, Count => 3);
       end if;

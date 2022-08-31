@@ -1,6 +1,6 @@
 ![PCB render](hw/fanctl-bottom.jpg)
 
-[Schematic](hw/fanctl.pdf)
+[Schematic](https://github.com/JeremyGrosser/fanctl/raw/master/hw/fanctl.pdf)
 
 This project was meant to demonstrate closed loop PID control of a 3-pin PC
 fan. While the resulting board works, I learned that the tachometer pin on the

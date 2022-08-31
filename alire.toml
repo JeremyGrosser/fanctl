@@ -12,4 +12,4 @@ auto-gpr-with=false
 project-files = ["fanctl.gpr"]
 
 [[depends-on]]
-pico_bsp = "~0.5.0"
+pico_bsp = "^1"

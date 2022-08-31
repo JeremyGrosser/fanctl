@@ -1,5 +1,7 @@
 ![PCB render](hw/fanctl-bottom.jpg)
 
+[Schematic](hw/fanctl.pdf)
+
 This project was meant to demonstrate closed loop PID control of a 3-pin PC
 fan. While the resulting board works, I learned that the tachometer pin on the
 fan is connected to a hall effect sensor, powered by +12V. This means that you

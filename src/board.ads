@@ -3,10 +3,7 @@
 --
 --  SPDX-License-Identifier: BSD-3-Clause
 --
-with Units;   use Units;
-with RP.Device;
-
-with Console;
+with Units; use Units;
 with Piezo;
 with Pico;
 

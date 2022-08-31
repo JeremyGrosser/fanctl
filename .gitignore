@@ -1,6 +1,5 @@
-*.adt
-*.ali
+/obj/
+/bin/
+/alire/
+/config/
 *.swp
-obj
-alire
-alire.lock

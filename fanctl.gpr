@@ -1,48 +1,34 @@
--- begin auto-gpr-with --
---  This section was automatically added by Alire
-with "hal.gpr";
+with "config/fanctl_config.gpr";
 with "pico_bsp.gpr";
--- end auto-gpr-with --
 
 project Fanctl is
 
-   for Runtime ("Ada") use "zfp-cortex-m0p";
    for Target use "arm-eabi";
-   for Main use ("main.adb");
-   for Languages use ("Ada");
-   for Source_Dirs use ("src");
-   for Object_Dir use "obj";
+   for Runtime ("Ada") use "light-cortex-m0p";
+
+   for Source_Dirs use ("src/", "config/");
+   for Object_Dir use "obj/" & Fanctl_Config.Build_Profile;
    for Create_Missing_Dirs use "True";
+   for Exec_Dir use "bin";
+   for Main use ("main.adb");
 
    package Compiler is
-       for Switches ("Ada") use (
-           "-O0",
-           "-g",
-           "-gnatwa",       --  All warnings
-           "-gnatwl",       --  Elaboration warnings
-           "-gnatVa",       --  Validity checks
-           "-gnatyg",       --  Style checks
-           "-gnatyM120",    --  Line length
-           "-gnatyO",       --  Overriding subprograms must be explicitly marked
-           "-gnata",        --  Assertions
-           "-gnatn",        --  Enable inlining
-           "-gnatQ",        --  Keep going after errors
-           "-gnatw.X",      --  Hide No_Exception_Propagation warnings
-           "-gnatwB",       --  Hide Warn_On_Bad_Fixed_Value
-           "-fstack-usage", --  Output stack usage information
-           "-ffunction-sections",
-           "-fdata-sections"
-       );
+      for Default_Switches ("Ada") use Fanctl_Config.Ada_Compiler_Switches & (
+         "-gnaty-B",
+         "-gnatyM120"
+      );
    end Compiler;
 
-   package Linker is
-      for Default_Switches ("Ada") use
-          Pico_BSP.Linker_Switches & (
-              "-Wl,-gc-sections",
-              "-Wl,-print-memory-usage",
-              "-Wl,-Map=main.map"
-          );
-   end Linker;
+   package Binder is
+      for Switches ("Ada") use ("-Es"); --  Symbolic traceback
+   end Binder;
 
+   package Install is
+      for Artifacts (".") use ("share");
+   end Install;
+
+   package Linker is
+      for Switches ("Ada") use Pico_BSP.Linker_Switches;
+   end Linker;
 
 end Fanctl;

@@ -4,7 +4,6 @@
 --  SPDX-License-Identifier: BSD-3-Clause
 --
 with RP.Timer; use RP.Timer;
-with RP.Device;
 
 with Fixed_PID_Control; use Fixed_PID_Control;
 with Units; use Units;
@@ -20,8 +19,6 @@ procedure Main is
        Dt       => 10.0,
        Setpoint => 0.1500,
        others   => <>);
-
-   Step : Fixed := 0.01;
 
    Max_RPM   : Fixed := 10_000.0;
    Output_DC : Duty_Cycle;

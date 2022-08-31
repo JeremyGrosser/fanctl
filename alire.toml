@@ -1,15 +1,12 @@
 name = "fanctl"
-description = "Examples for Ada on the Raspberry Pi Pico"
-version = "0.1.0"
+description = "Shiny new project"
+version = "0.1.0-dev"
 
 authors = ["Jeremy Grosser"]
 maintainers = ["Jeremy Grosser <jeremy@synack.me>"]
 maintainers-logins = ["JeremyGrosser"]
-licenses = "BSD-3-Clause"
-tags = ["embedded", "nostd", "pico", "rp2040"]
-website = "https://github.com/JeremyGrosser/pico_examples"
-auto-gpr-with=false
-project-files = ["fanctl.gpr"]
+
+executables = ["fanctl"]
 
 [[depends-on]]
-pico_bsp = "^1"
+pico_bsp = "^2"

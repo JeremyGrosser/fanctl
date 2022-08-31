@@ -4,9 +4,10 @@
 --  SPDX-License-Identifier: BSD-3-Clause
 --
 with HAL;
-with RP.Timer; use RP.Timer;
+with Console;
 with RP.GPIO;  use RP.GPIO;
 with RP;       use RP;
+with RP.Device;
 with RP.Clock;
 with RP.ADC;
 with RP.PWM;
@@ -14,8 +15,8 @@ with RP.PWM;
 package body Board is
 
    --  Pin definitions
-   UART_TX   : RP.GPIO.GPIO_Point renames Pico.GP16;
-   UART_RX   : RP.GPIO.GPIO_Point renames Pico.GP17;
+   --  UART_TX   : RP.GPIO.GPIO_Point renames Pico.GP16;
+   --  UART_RX   : RP.GPIO.GPIO_Point renames Pico.GP17;
 
    FAN_PWM   : RP.GPIO.GPIO_Point renames Pico.GP4;
    FAN_TACO  : RP.GPIO.GPIO_Point renames Pico.GP7;
@@ -81,7 +82,7 @@ package body Board is
       Set_Count (TACO_Slice, 0);
       Enable (TACO_Slice);
       RP.Device.Timer.Delay_Milliseconds (Sample_Time);
-      Pulses_Per_Second := Count (TACO_Slice) * (1_000 / Sample_Time);
+      Pulses_Per_Second := Integer (Count (TACO_Slice)) * (1_000 / Sample_Time);
       Disable (TACO_Slice);
 
       --  Restore the duty cycle that was previously set
